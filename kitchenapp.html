@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Appliances Page</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; color: #333; }
+        header { background-color: #232f3e; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        header a.logo { font-size: 24px; font-weight: bold; color: white; text-decoration: none; }
+        nav { margin-left: auto; display: flex; align-items: center; }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-size: 18px; padding: 5px 10px; }
+
+        /* Link Hover Styling */
+        nav a:hover {
+            background-color: #ff9900;
+            border-radius: 5px;
+            padding: 5px 10px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Dropdown Menu Styles */
+        .dropdown {
+            position: relative;
+            display: block;
+            padding: 5px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            padding: 10px;
+            background-color: white;
+            min-width: 200px;
+            margin: 10px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            margin: 8px;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin: 8px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .cart-icon { position: relative; cursor: pointer; }
+        .cart-count { position: absolute; top: -5px; right: -10px; background-color: red; color: white; border-radius: 50%; padding: 3px 7px; font-size: 12px; }
+
+        /* Kitchen Appliances Products Section */
+        .kitchen-section {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .kitchen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .kitchen-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+            object-fit: cover;
+        }
+
+        .kitchen-item img {
+             width: 100%;          /* Make sure the width is 100% of the parent */
+             height: 150px;       /* Set a fixed height */
+             object-fit: cover;   /* This ensures that images cover the area without distorting */
+             margin-bottom: 10px;
+             border-radius: 3px;
+            
+            
+        }
+
+        .kitchen-item h2 {
+            font-size: 20px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .kitchen-item p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .kitchen-item .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff9900;
+            margin: 15px 0;
+        }
+
+        .kitchen-item button {
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .kitchen-item button:hover {
+            background-color: #e68a00;
+        }
+
+        @media (max-width: 600px) {
+            nav a { margin: 0 10px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">MyShop</a>
+        <nav>
+            <a href="home.html">Home</a>
+
+            <div class="dropdown">
+                <a href="#" class="shop-button">Shop</a>
+                <div class="dropdown-content">
+                    <a href="mobiles.html">Mobiles & Laptops</a>
+                    <a href="clothes.html">Clothes</a>
+                    <a href="furniture.html">Furniture</a>
+                    <a href="kitchenapp.html">Kitchen Appliances</a>
+                </div>
+            </div>
+
+            <a href="#">Deals</a>
+            <a href="#">Contact</a>
+            <div class="cart-icon" onclick="toggleCart()">
+                <img src="https://via.placeholder.com/30" alt="Cart">
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content - Kitchen Appliances Products Section -->
+    <div class="kitchen-section">
+        <h1>Kitchen Appliances Collection</h1>
+        <div class="kitchen-grid">
+            <div class="kitchen-item">
+                <img src="blender.jpg" alt="Blender">
+                <h2>Blender</h2>
+                <p>High-performance blender for smoothies and shakes.</p>
+                <div class="price">$149</div>
+                <button onclick="openProductPage('Blender', 149, 'blender.jpg', 'Description for Blender')">View Details</button>
+            </div>
+
+            <div class="kitchen-item">
+                <img src="microsoftoven.jpg" alt="Microwave Oven">
+                <h2>Microwave Oven</h2>
+                <p>Compact microwave oven for quick heating.</p>
+                <div class="price">$199</div>
+                <button onclick="openProductPage('Microwave Oven', 199, 'microsoftoven.jpg', 'Description for Microwave Oven')">View Details</button>
+            </div>
+
+            <div class="kitchen-item">
+                <img src="coffeemaker.jpg" alt="Coffee Maker">
+                <h2>Coffee Maker</h2>
+                <p>Brew your perfect cup with this coffee maker.</p>
+                <div class="price">$99</div>
+                <button onclick="openProductPage('Coffee Maker', 99, 'coffeemaker.jpg', 'Description for Coffee Maker')">View Details</button>
+            </div>
+
+            <div class="kitchen-item">
+                <img src="toaster.jpg" alt="Toaster">
+                <h2>Toaster</h2>
+                <p>Crisp and golden toast every morning.</p>
+                <div class="price">$49</div>
+                <button onclick="openProductPage('Toaster', 49, 'toaster.jpg', 'Description for Toaster')">View Details</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function(){updateCartCount();};
+
+        // Function to navigate to the product info page
+        function openProductPage(title, price, image, description) {
+            window.location.href = `productinfo.html?title=${encodeURIComponent(title)}&price=${price}&image=${encodeURIComponent(image)}&description=${encodeURIComponent(description)}`;
+        }
+
+         function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let uniqueItemsCount = cart.length;  // Only count unique items
+            document.getElementById('cart-count').innerText = uniqueItemsCount;
+         }
+        function toggleCart() {
+            window.location.href = 'cartPage.html';
+        }
+    </script>
+</body>
+</html>

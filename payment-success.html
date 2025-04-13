@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .confirmation-container {
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            padding: 40px;
+            width: 400px;
+        }
+
+        h1 {
+            color: #28a745;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            width: 45%;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .btn.order {
+            background-color: #007bff;
+        }
+
+        .btn.order:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="confirmation-container">
+        <h1>Order Completed!</h1>
+        <p>Your order has been placed successfully. Thank you for shopping with us!</p>
+        <div class="buttons">
+            <a href="home.html" class="btn">Continue Shopping</a>
+            <a href="orders.html" class="btn order">View Orders</a>
+        </div>
+    </div>
+
+    <script>
+        // Automatically move cart items to orders when the order confirmation message is shown
+        window.onload = function() {
+            moveCartToOrders();
+        };
+
+        function moveCartToOrders() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+            if (cart.length > 0) {
+                // Add cart items to orders
+                orders.push(...cart);
+                localStorage.setItem('orders', JSON.stringify(orders));
+
+                // Clear the cart after order is confirmed
+                localStorage.removeItem('cart');
+            }
+        }
+    </script>
+
+</body>
+</html>

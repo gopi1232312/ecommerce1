@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <style>
+        /* Your existing CSS code */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #343a40;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .orders-container {
+            max-width: 900px;
+            width: 100%;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .order-item {
+            border-bottom: 1px solid #dee2e6;
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .order-quantity,
+        .order-price {
+            font-size: 16px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .order-quantity {
+            font-weight: 500;
+        }
+
+        .order-price {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .order-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .order-item:hover {
+            background-color: #f8f9fa;
+            transition: background-color 0.3s ease-in-out;
+            border-left: 4px solid #007bff;
+            padding-left: 16px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-btn {
+            padding: 8px 12px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        @media (max-width: 768px) {
+            .orders-container {
+                padding: 15px;
+            }
+
+            .order-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .order-title {
+                font-size: 18px;
+            }
+
+            .order-quantity,
+            .order-price {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My Orders</h1>
+
+    <div class="orders-container" id="orders-container">
+        <!-- Orders will be displayed here dynamically -->
+    </div>
+
+    <script>
+        // Function to load and display orders from localStorage
+        function displayOrders() {
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            let ordersContainer = document.getElementById('orders-container');
+            ordersContainer.innerHTML = ''; // Clear existing content
+
+            if (orders.length === 0) {
+                ordersContainer.innerHTML = '<p>No orders found.</p>';
+                return;
+            }
+
+            orders.forEach((order, index) => {
+                let orderItem = document.createElement('div');
+                orderItem.classList.add('order-item');
+                
+                orderItem.innerHTML = `
+                    <div class="order-info">
+                        <div class="order-title">Order #${index + 1}</div>
+                        <div class="order-quantity">Item: ${order.title}</div>
+                        <div class="order-quantity">Quantity: ${order.quantity}</div>
+                    </div>
+                    <div class="order-price">$${order.price}</div>
+                    <button class="delete-btn" onclick="deleteOrder(${index})">Delete</button>
+                `;
+
+                ordersContainer.appendChild(orderItem);
+            });
+        }
+
+        // Function to delete an order by index
+        function deleteOrder(index) {
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.splice(index, 1); // Remove order at the given index
+            localStorage.setItem('orders', JSON.stringify(orders)); // Update localStorage
+            displayOrders(); // Re-render the orders list
+        }
+
+        // Load and display orders when the page loads
+        window.onload = displayOrders;
+    </script>
+
+</body>
+</html>

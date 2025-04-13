@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My E-Commerce Site</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; color: #333; }
+
+        /* Header and Navigation */
+        header { background-color: #232f3e; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        header a.logo { font-size: 24px; font-weight: bold; color: white; text-decoration: none; }
+        nav { margin-left: auto; display: flex; align-items: center; }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-size: 18px; padding: 5px 10px; }
+        .cart-icon { position: relative; cursor: pointer; }
+        .cart-count { position: absolute; top: -5px; right: -10px; background-color: red; color: white; border-radius: 50%; padding: 3px 7px; font-size: 12px; }
+        
+        
+    /* Link Hover Styling */
+        nav a:hover {
+        background-color: #ff9900; /* Background color on hover */
+        border-radius: 5px;
+        padding: 5px 10px; /* Add some padding */
+        border-radius: 5px; /* Rounded corners */
+        text-decoration:none;
+        /* Smooth transition */
+        transition: background-color 0.3s ease;
+    }
+
+    /* Dropdown Menu Styles */
+    .dropdown {
+        position: relative;
+        display: block;
+        padding: 5px;        
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        padding: 10px;
+        background-color: white;
+        min-width: 200px;
+        margin: 10px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        margin: 8px;
+        padding: 10px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+        padding: 10px;
+        margin: 8px;
+
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block; /* Show the dropdown on hover */
+    }
+
+           
+
+        /* Search Bar */
+        .search-bar { display: flex; justify-content: center; margin: 20px 0; }
+        .search-bar input { width: 60%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px 0 0 5px; }
+        .search-bar button { padding: 10px; background-color: #ff9900; border: none; color: white; cursor: pointer; font-size: 16px; border-radius: 0 5px 5px 0; }
+        .search-bar button:hover { background-color: #e68900; }
+
+        /* Banner */
+        .banner { width: 100%; height: 300px; background-size: cover; background-image: url('home1.jpg'); background-position: center; margin-bottom: 30px; transition: background-image 0.5s ease-in-out;}
+
+        /* Main Content */
+        .main { padding: 20px; }
+        .category { margin-bottom: 40px; }
+        .category h2 { font-size: 28px; margin-bottom: 20px; }
+        .category .products { display: flex; justify-content: space-between; flex-wrap: wrap; }
+        .product { width: 23%; background-color: white; padding:20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px; text-align: center;}
+        .product img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px;}
+        .product h3 { font-size: 18px; margin: 10px 0; }
+        .product p { font-size: 16px; color: #555; }
+        .product button { background-color: #ff9900; color: white; padding: 10px 15px; border: none; cursor: pointer;  border-radius: 3px;}
+        .product button:hover { background-color: #e68900; }
+
+        /* Cart Modal */
+        .cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; }
+        .cart-modal-content { background: white; padding: 20px; border-radius: 8px; width: 400px; max-height: 80%; overflow-y: auto; }
+        .cart-modal h2 { margin-top: 0; }
+        .cart-modal ul { list-style-type: none; padding: 0; }
+        .cart-modal ul li { padding: 10px 0; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
+        .cart-modal ul li span { font-size: 16px; }
+        .cart-modal .total { margin-top: 20px; font-size: 18px; font-weight: bold; text-align: right; }
+        .cart-modal button { background-color: #ff9900; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 20px; width: 100%; }
+        .cart-modal button:hover { background-color: #e68900; }
+
+        /* Footer */
+        footer { background-color: #232f3e; color: white; text-align: center; padding: 20px; margin-top: 40px; }
+        footer p { margin: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">MyShop</a>
+        <nav>
+            <a href="home.html">Home</a>
+           <!-- Shop Dropdown -->
+<div class="dropdown">
+    <a href="#" class="shop-button">Shop</a>
+    <div class="dropdown-content">
+        <a href="mobiles.html">Mobiles</a>
+        <a href="clothes.html">Clothes</a>
+        <a href="furniture.html">Furniture</a>
+        <a href="kitchenapp.html">Kitchen Appliances</a>
+    </div>
+</div>
+            <a href="deals.html">Deals</a>
+            <a href="orders.html">Orders</a>
+            <div class="cart-icon" onclick="toggleCart()">
+                <img src="https://via.placeholder.com/30" alt="Cart">
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for products...">
+        <button onclick="searchProducts()">Search</button>
+    </div>
+
+    <!-- Banner -->
+    <div class="banner" id="banner"></div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- Product Categories -->
+        <div class="category">
+    <h2>Featured Products</h2>
+    <div class="products">
+        <!-- Product 1: Laptop -->
+        <div class="product">
+            <img src="laptop1.jpg" alt="High-Performance Laptop">
+            <h3>High-Performance Laptop</h3>
+            <p>$999.99</p>
+            <button onclick="openProductPage('High-Performance Laptop', 999.99, 'laptop1.jpg', 'This laptop is equipped with the latest Intel i7 processor, 16GB RAM, 512GB SSD, and a 15.6-inch FHD display. Perfect for both work and gaming.')">View Details</button>
+        </div>
+
+        <!-- Product 2: Smartphone -->
+        <div class="product">
+            <img src="phone1.jpg" alt="Latest 5G Smartphone">
+            <h3>Latest 5G Smartphone</h3>
+            <p>$699.99</p>
+            <button onclick="openProductPage('Latest 5G Smartphone', 699.99, 'phone1.jpg', 'Experience the speed of 5G with a 6.5-inch OLED display, 128GB storage, and a triple-camera system. Capture your best moments in stunning clarity.')">View Details</button>
+        </div>
+
+        <!-- Product 3: Sofa -->
+        <div class="product">
+            <img src="sofa1.jpg" alt="Luxury Leather Sofa">
+            <h3>Luxury Leather Sofa</h3>
+            <p>$1,299.99</p>
+            <button onclick="openProductPage('Luxury Leather Sofa', 1299.99, 'sofa1.jpg', 'Comfort meets style with this luxury leather sofa. Crafted from high-quality materials, this sofa is perfect for relaxing and entertaining guests.')">View Details</button>
+        </div>
+
+        <!-- Product 4: Blender -->
+        <div class="product">
+            <img src="blender1.jpg" alt="High-Speed Blender">
+            <h3>High-Speed Blender</h3>
+            <p>$149.99</p>
+            <button onclick="openProductPage('High-Speed Blender', 149.99, 'blender1.jpg', 'Make smoothies, soups, and sauces with ease using this high-speed blender. Features multiple settings and a powerful motor to handle all your kitchen needs.')">View Details</button>
+        </div>
+    </div>
+</div>
+
+<div class="category">
+    <h2>Best Deals</h2>
+    <div class="products">
+        <!-- Product 5: Ergonomic Chair -->
+        <div class="product">
+            <img src="chair2.jpg" alt="Ergonomic Office Chair">
+            <h3>Ergonomic Office Chair</h3>
+            <p>$199.99</p>
+            <button onclick="openProductPage('Ergonomic Office Chair', 199.99, 'chair2.jpg', 'Stay comfortable during long work hours with this ergonomic office chair. It features adjustable armrests, lumbar support, and a breathable mesh back.')">View Details</button>
+        </div>
+
+        <!-- Product 6: Casual Pants -->
+        <div class="product">
+            <img src="pant.jpg" alt="Men's Casual Pants">
+            <h3>Men's Casual Pants</h3>
+            <p>$39.99</p>
+            <button onclick="openProductPage('Men\'s Casual Pants', 39.99, 'pant.jpg', 'These stylish and comfortable casual pants are perfect for everyday wear. Made from durable, breathable fabric, they are available in multiple sizes.')">View Details</button>
+        </div>
+
+        <!-- Product 7: Coffee Maker -->
+        <div class="product">
+            <img src="coffeemaker1.jpg" alt="Automatic Coffee Maker">
+            <h3>Automatic Coffee Maker</h3>
+            <p>$79.99</p>
+            <button onclick="openProductPage('Automatic Coffee Maker', 79.99, 'coffeemaker1.jpg', 'Brew the perfect cup of coffee every time with this automatic coffee maker. Features programmable settings, a built-in grinder, and a sleek design.')">View Details</button>
+        </div>
+
+        <!-- Product 8: Budget Laptop -->
+        <div class="product">
+            <img src="laptop2.jpg" alt="Budget Laptop">
+            <h3>Budget Laptop</h3>
+            <p>$499.99</p>
+            <button onclick="openProductPage('Budget Laptop', 499.99, 'laptop2.jpg', 'An affordable laptop perfect for students and professionals. Features 8GB RAM, 256GB SSD, and a 14-inch HD display for everyday tasks.')">View Details</button>
+        </div>
+    </div>
+</div>
+
+    </div>
+   
+  <script>
+     window.onload = function() {
+            updateCartCount();
+            startBannerRotation(); // Start the image rotation on load
+        };
+
+        // Function to rotate banner images
+        let currentImageIndex = 0;
+        const images = [
+            'home1.jpg', // Image 1
+            'home2.jpg', // Image 2
+            'home3.jpg', // Image 3
+            'home4.jpg'  // Image 4
+        ];
+
+        function startBannerRotation() {
+            const bannerElement = document.getElementById('banner');
+            setInterval(() => {
+                bannerElement.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+                currentImageIndex = (currentImageIndex + 1) % images.length; // Loop back to the first image
+            }, 2000); // Change image every 2 seconds
+        }
+
+
+
+    function openProductPage(title, price, image, description) {
+        window.location.href = `productinfo.html?title=${encodeURIComponent(title)}&price=${price}&image=${encodeURIComponent(image)}&description=${encodeURIComponent(description)}`;
+        console.log(title +'hi');
+         
+}
+
+ function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let uniqueItemsCount = cart.length;  // Only count unique items
+            document.getElementById('cart-count').innerText = uniqueItemsCount;
+}
+
+function toggleCart() {
+            window.location.href = 'cartPage.html';
+        }
+		
+         const products = [
+            { name: "mobiles", url: "mobiles.html" },
+            { name: "clothes", url: "clothes.html" },
+            { name: "furniture", url: "furniture.html" },
+            { name: "kitchen appliances", url: "kitchen-appliances.html" }
+        ];
+
+        // Basic Levenshtein distance algorithm to calculate the difference between two strings
+        function levenshtein(a, b) {
+            const matrix = [];
+
+            // Increment along the first column of each row
+            for (let i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+
+            // Increment each column in the first row
+            for (let j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+
+            // Fill the rest of the matrix
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1, // insertion
+                            matrix[i - 1][j] + 1 // deletion
+                        );
+                    }
+                }
+            }
+
+            return matrix[b.length][a.length];
+        }
+
+        // Search function that allows for slight spelling mistakes
+        function searchProducts() {
+            const searchQuery = document.getElementById("searchInput").value.toLowerCase();
+
+            let bestMatch = null;
+            let lowestDistance = Infinity;
+
+            // Check for the closest match using Levenshtein distance
+            products.forEach(product => {
+                const distance = levenshtein(searchQuery, product.name.toLowerCase());
+
+                if (distance < lowestDistance) {
+                    lowestDistance = distance;
+                    bestMatch = product;
+                }
+            });
+
+            // If a match is found, redirect to the respective page
+            if (bestMatch && lowestDistance <= 3) { // Allowing a distance of 3 for fuzzy match
+                window.location.href = bestMatch.url;
+            } else {
+                alert('No matching product found.');
+            }
+        }
+</script>

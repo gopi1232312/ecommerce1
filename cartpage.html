@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+	  
+	     
+       * { box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; color: #333; }
+
+        /* Header and Navigation */
+        header { background-color: #232f3e; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        header a.logo { font-size: 24px; font-weight: bold; color: white; text-decoration: none; }
+        nav { margin-left: auto; display: flex; align-items: center; }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-size: 18px; padding: 5px 10px; }
+        .cart-icon { position: relative; cursor: pointer; }
+        .cart-count { position: absolute; top: -5px; right: -10px; background-color: red; color: white; border-radius: 50%; padding: 3px 7px; font-size: 12px; }
+        
+       #items-container{margin:40px;} 
+    /* Link Hover Styling */
+        nav a:hover {
+        background-color: #ff9900; /* Background color on hover */
+        border-radius: 5px;
+        padding: 5px 10px; /* Add some padding */
+        border-radius: 5px; /* Rounded corners */
+        text-decoration:none;
+        /* Smooth transition */
+        transition: background-color 0.3s ease;
+    }
+
+    /* Dropdown Menu Styles */
+    .dropdown {
+        position: relative;
+        display: block;
+        padding: 5px;        
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        padding: 10px;
+        background-color: white;
+        min-width: 200px;
+        margin: 10px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        margin: 8px;
+        padding: 10px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+        padding: 10px;
+        margin: 8px;
+
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block; /* Show the dropdown on hover */
+    }
+        h1 { text-align: center; color: #333; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: white; margin-bottom: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        .cart-item div { flex: 1; text-align: center; }
+        .cart-item img { max-width: 50px; border-radius: 5px; }
+        .quantity { display: flex; align-items: center; }
+        .quantity input { width: 40px; text-align: center; border: 1px solid #ccc; border-radius: 4px; margin: 0 5px; }
+        .quantity button { padding: 5px; border: none; background-color: #ff9900; color: white; border-radius: 4px; cursor: pointer; }
+        .quantity button:hover { background-color: #e68900; }
+        .remove-button { padding: 5px 10px; border: none; background-color: #dc3545; color: white; border-radius: 4px; cursor: pointer; }
+        .remove-button:hover { background-color: #c82333; }
+        .total { text-align: right; font-size: 24px; font-weight: bold; color: #ff9900; margin-top: 20px; margin-bottom: 10px}
+        .checkout { display: block; width: 100%; padding: 10px; background-color: #28a745; color: white; text-align: center; text-decoration: none; border-radius: 5px; }
+        .checkout:hover { background-color: #218838; }
+        .cart-empty { text-align: center; font-size: 18px; margin-top: 20px; }
+        @media (max-width: 600px) {
+            .cart-item { flex-direction: column; align-items: flex-start; }
+            .cart-item div { margin-bottom: 10px; }
+        }
+    </style>
+</head>
+<body>
+        <header>
+        <a href="#" class="logo">MyShop</a>
+        <nav>
+            <a href="home.html">Home</a>
+           <!-- Shop Dropdown -->
+<div class="dropdown">
+    <a href="#" class="shop-button">Shop</a>
+    <div class="dropdown-content">
+        <a href="mobiles.html">Mobiles</a>
+        <a href="clothes.html">Clothes</a>
+        <a href="furniture.html">Furniture</a>
+        <a href="kitchenapp.html">Kitchen Appliances</a>
+    </div>
+</div>
+            <a href="deals.html">Deals</a>
+            <a href="contact.html">Contact</a>
+            <div class="cart-icon" onclick="toggleCart()">
+                <img src="https://via.placeholder.com/30" alt="Cart">
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+    <div id="items-container">
+    <h1>Your Cart</h1>
+    <div id="cart-items"></div>
+    <div class="total" id="cart-total">Total: $0.00</div>
+    <a href="checkoutpage.html" class="checkout">Checkout</a>
+	</div>
+
+    <script>
+	       window.onload = function() {
+            updateCartCount();
+            startBannerRotation(); // Start the image rotation on load
+        };
+		   
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let cartItemsContainer = document.getElementById('cart-items');
+            let cartTotalContainer = document.getElementById('cart-total');
+            let total = 0;
+
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `<div class="cart-empty">Your cart is empty!</div>`;
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price * item.quantity;
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <div><img src="${item.image}" alt="${item.title}"></div>
+                            <div>${item.title}</div>
+                            <div>$${item.price.toFixed(2)}</div>
+                            <div class="quantity">
+                                <button onclick="updateQuantity(${index}, -1)">-</button>
+                                <input type="text" value="${item.quantity}" readonly>
+                                <button onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <button class="remove-button" onclick="removeItem(${index})">Remove</button>
+                        </div>
+                    `;
+                });
+            }
+
+            cartTotalContainer.innerText = `Total: $${total.toFixed(2)}`;
+        }
+		
+		function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let uniqueItemsCount = cart.length;  // Only count unique items
+            document.getElementById('cart-count').innerText = uniqueItemsCount;
+}
+
+function toggleCart() {
+            window.location.href = 'cartPage.html';
+        }
+
+        function updateQuantity(index, delta) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let item = cart[index];
+            item.quantity += delta;
+
+            if (item.quantity <= 0) {
+                cart.splice(index, 1);  // Remove item if quantity goes to 0 or less
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();  // Reload the cart after updating
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);  // Remove the item at the specified index
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();  // Reload the cart after removing
+        }
+
+        loadCart();
+    </script>
+</body>
+</html>

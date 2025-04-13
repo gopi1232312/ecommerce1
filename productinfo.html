@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; color: #333; }
+        header { background-color: #232f3e; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        header a.logo { font-size: 24px; font-weight: bold; color: white; text-decoration: none; }
+        nav { margin-left: auto; display: flex; align-items: center; }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-size: 18px; padding: 5px 10px; }
+   
+                  /* Link Hover Styling */
+        nav a:hover {
+        background-color: #ff9900; /* Background color on hover */
+        border-radius: 5px;
+        padding: 5px 10px; /* Add some padding */
+        border-radius: 5px; /* Rounded corners */
+        text-decoration:none;
+        /* Smooth transition */
+        transition: background-color 0.3s ease;
+    }
+
+    /* Dropdown Menu Styles */
+    .dropdown {
+        position: relative;
+        display: block;
+        padding: 5px;        
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        padding: 10px;
+        background-color: white;
+        min-width: 200px;
+        margin: 10px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        margin: 8px;
+        padding: 10px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+        padding: 10px;
+        margin: 8px;
+
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block; /* Show the dropdown on hover */
+    }
+}       
+
+
+        .cart-icon { position: relative; cursor: pointer; }
+        .cart-count { position: absolute; top: -5px; right: -10px; background-color: red; color: white; border-radius: 50%; padding: 3px 7px; font-size: 12px; }
+        .container { display: flex; justify-content: center; align-items: center; height: calc(100vh - 70px); padding:40px 20px;}
+        .content { display: flex;  padding: 40px; max-width: 1000px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); gap: 40px;  height: 80%;}
+        .image { flex: 1; max-width: 50%; border-radius: 8px; overflow: hidden;}
+        .info { flex: 1; padding-left: 20px; display: flex; flex-direction: column; justify-content: center;}
+        .image img { width: 100%; margin-top: 30px; border-radius: 8px; height: 300px; }
+        .info h1 { margin: 0; font-size: 24px; margin-bottom: 15px; }
+        
+        .info p { font-size: 18px; margin: 10px 0; }
+
+        .info p#product-price {
+        font-size: 22px; /* Larger price text */
+        color: #e60000; /* Highlight price in red */
+        margin-bottom: 15px; /* Added space below price */
+        }
+        .info p#product-description {
+        font-size: 18px;
+        line-height: 1.6; /* Improved readability with increased line height */
+        margin-bottom: 20px; /* Added space below description */
+        }
+        .info button { background-color: #ff9900; color: white; padding: 12px 20px; border: none; cursor: pointer; border-radius: 5px; font-size: 16px; /* Larger button text */
+        transition: background-color 0.3s ease;}
+        .info button:hover { background-color: #e68900; }
+        @media (max-width: 600px) {
+            .content { flex-direction: column; align-items: center; max-width: 100%; gap: 20px; }
+            .info { padding-left: 0; text-align: center; }
+    
+        .image {
+        max-width: 80%; 
+        object-fit: cover;/* Adjust image width on small screens */
+    }
+
+
+        
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">MyShop</a>
+        <nav>
+            <a href="home.html">Home</a>
+
+            <div class="dropdown">
+              <a href="#" class="shop-button">Shop</a>
+                <div class="dropdown-content">
+                   <a href="#">Mobiles & Laptops</a>
+                   <a href="#">Clothes</a>
+                   <a href="#">Furniture</a>
+                   <a href="#">Kitchen Appliances</a>
+                </div>
+            </div>
+
+            <a href="#">Deals</a>
+            <a href="#">Contact</a>
+            <div class="cart-icon" onclick="toggleCart()">
+                <img src="https://via.placeholder.com/30" alt="Cart">
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="content">
+            <div class="image">
+                <img src="https://via.placeholder.com/300" id="product-image" alt="Product Image">
+            </div>
+            <div class="info">
+                <h1 id="product-title"></h1>
+                <p id="product-price"></p>
+                <p id="product-description"></p>
+                <button onclick="addToCart()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal" style="display: none;">
+        <div class="cart-modal-content">
+            <h2>Your Cart</h2>
+            <ul id="cart-items"></ul>
+            <div class="total" id="cart-total">Total: $0.00</div>
+            <button onclick="toggleCart()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const title = params.get('title');
+        const price = parseFloat(params.get('price'));
+        const image = params.get('image');
+        const description = params.get('description');
+
+        document.getElementById('product-title').innerText = title;
+        document.getElementById('product-price').innerText = `$${price.toFixed(2)}`;
+        document.getElementById('product-image').src = image;
+        document.getElementById('product-description').innerText = description;
+
+        function addToCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let existingProduct = cart.find(product => product.title === title);
+            
+            if (existingProduct) {
+                existingProduct.quantity += 1;
+            } else {
+                cart.push({ title, price, image, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${title} added to cart`);
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let uniqueItemsCount = cart.length;  // Only count unique items
+            document.getElementById('cart-count').innerText = uniqueItemsCount;
+        }
+
+        function toggleCart() {
+            window.location.href = 'cartPage.html';
+        }
+
+        updateCartCount();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deals Page</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; color: #333; }
+        header { background-color: #232f3e; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        header a.logo { font-size: 24px; font-weight: bold; color: white; text-decoration: none; }
+        nav { margin-left: auto; display: flex; align-items: center; }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-size: 18px; padding: 5px 10px; }
+
+        nav a:hover {
+            background-color: #ff9900;
+            border-radius: 5px;
+            padding: 5px 10px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown {
+            position: relative;
+            display: block;
+            padding: 5px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            padding: 10px;
+            background-color: white;
+            min-width: 200px;
+            margin: 10px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            margin: 8px;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin: 8px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .cart-icon { position: relative; cursor: pointer; }
+        .cart-count { position: absolute; top: -5px; right: -10px; background-color: red; color: white; border-radius: 50%; padding: 3px 7px; font-size: 12px; }
+
+        /* Deals Section */
+        .deals-section {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .deals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .deals-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .deals-item img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+
+        .deals-item h2 {
+            font-size: 20px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .deals-item p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .deals-item .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff9900;
+            margin: 15px 0;
+        }
+
+        .deals-item button {
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .deals-item button:hover {
+            background-color: #e68a00;
+        }
+
+        @media (max-width: 600px) {
+            nav a { margin: 0 10px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">MyShop</a>
+        <nav>
+            <a href="#">Home</a>
+
+            <div class="dropdown">
+                <a href="#" class="shop-button">Shop</a>
+                <div class="dropdown-content">
+                    <a href="mobiles.html">Mobiles & Laptops</a>
+                    <a href="clothes.html">Clothes</a>
+                    <a href="furniture.html">Furniture</a>
+                    <a href="kitchenapp.html">Kitchen Appliances</a>
+                </div>
+            </div>
+
+            <a href="#">Deals</a>
+            <a href="#">Contact</a>
+             <div class="cart-icon" onclick="toggleCart()">
+                <img src="https://via.placeholder.com/30" alt="Cart">
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content - Deals Section -->
+    <div class="deals-section">
+        <h1>Today's Best Deals</h1>
+        <div class="deals-grid">
+            <!-- Product 1 -->
+            <div class="deals-item">
+                <img src="laptop.jpg" alt="Laptop">
+                <h2>High-Performance Laptop</h2>
+                <p>Top-notch laptop with 16GB RAM and 512GB SSD.</p>
+                <div class="price">$999</div>
+                <button onclick="openProductPage('High-Performance Laptop', 999, 'https://via.placeholder.com/150', 'Top-notch laptop with 16GB RAM and 512GB SSD')">View Details</button>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="deals-item">
+                <img src="smartphone.jpg" alt="Smartphone">
+                <h2>Smartphone 5G</h2>
+                <p>Latest smartphone with 5G connectivity and 128GB storage.</p>
+                <div class="price">$699</div>
+                <button onclick="openProductPage('Smartphone 5G', 699, 'https://via.placeholder.com/150', 'Latest smartphone with 5G connectivity and 128GB storage')">View Details</button>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="deals-item">
+                <img src="tv.jpg" alt="Smart TV">
+                <h2>4K Ultra HD Smart TV</h2>
+                <p>55-inch Ultra HD TV with HDR support.</p>
+                <div class="price">$499</div>
+                <button onclick="openProductPage('4K Ultra HD Smart TV', 499, 'https://via.placeholder.com/150', '55-inch Ultra HD TV with HDR support')">View Details</button>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="deals-item">
+                <img src="headphones.jpg" alt="Headphones">
+                <h2>Noise-Cancelling Headphones</h2>
+                <p>Comfortable over-ear headphones with active noise cancellation.</p>
+                <div class="price">$199</div>
+                <button onclick="openProductPage('Noise-Cancelling Headphones', 199, 'https://via.placeholder.com/150', 'Comfortable over-ear headphones with active noise cancellation')">View Details</button>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="deals-item">
+                <img src="watch.jpg" alt="Smart Watch">
+                <h2>Smart Watch</h2>
+                <p>Track your fitness and notifications on the go.</p>
+                <div class="price">$149</div>
+                <button onclick="openProductPage('Smart Watch', 149, 'https://via.placeholder.com/150', 'Track your fitness and notifications on the go')">View Details</button>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="deals-item">
+                <img src="airfryer.jpg" alt="Air Fryer">
+                <h2>Air Fryer</h2>
+                <p>Cook healthy meals with less oil using this 5L air fryer.</p>
+                <div class="price">$99</div>
+                <button onclick="openProductPage('Air Fryer', 99, 'https://via.placeholder.com/150', 'Cook healthy meals with less oil using this 5L air fryer')">View Details</button>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="deals-item">
+                <img src="camera.jpg" alt="Camera">
+                <h2>DSLR Camera</h2>
+                <p>Capture stunning photos with this 24MP DSLR camera.</p>
+                <div class="price">$799</div>
+                <button onclick="openProductPage('DSLR Camera', 799, 'https://via.placeholder.com/150', 'Capture stunning photos with this 24MP DSLR camera')">View Details</button>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="deals-item">
+                <img src="tablet.jpg" alt="Tablet">
+                <h2>Android Tablet</h2>
+                <p>10-inch Android tablet with 64GB storage and long battery life.</p>
+                <div class="price">$249</div>
+                <button onclick="openProductPage('Android Tablet', 249, 'https://via.placeholder.com/150', '10-inch Android tablet with 64GB storage and long battery life')">View Details</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+         window.onload = function() {
+            updateCartCount();
+        };
+
+        function openProductPage(title, price, image, description) {
+        window.location.href = `productinfo.html?title=${encodeURIComponent(title)}&price=${price}&image=${encodeURIComponent(image)}&description=${encodeURIComponent(description)}`;
+        console.log(title +'hi');
+         
+}
+
+         function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let uniqueItemsCount = cart.length;  // Only count unique items
+            document.getElementById('cart-count').innerText = uniqueItemsCount;      
+        }
+
+       function toggleCart() {
+            window.location.href = 'cartPage.html';
+        }
+    </script>
+</body>
+</html>
